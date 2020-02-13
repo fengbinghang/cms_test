@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间的值为dao层接口的权限定名 -->
+<mapper namespace="com.fbh.dao.UserDao">
+	<!-- 查询用户表单条数据(用作登录验证|注册唯一验证) -->
+	<select id="getOne" resultMap="userMap">
+		select * from cms_user
+		<!-- 动态sql区分 -->
+		<!-- 如果只传入账号，就是注册唯一验证 -->
+		<!-- 如果之传入编号，就是查询单条数据进行操作 -->
+		<!-- 如果账号密码都传入，就是登录验证 -->
+		<where>
+			<if test="null!=id and id!=0"> and id=#{id}</if>
+			<if test="null!=username and username!=''"> and username=#{username}</if>
+			<if test="null!=password and password!=''"> and password=#{password}</if>
+		</where>
+	</select>
+	<resultMap type="User" id="userMap">
+		<id property="id" column="id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="nickname" column="nickname"/>
+		<result property="birthday" column="birthday"/>
+		<!-- 枚举类型转换器(序数)，不使用序数会有默认的EnumTypeHandler -->
+		<result property="gender" column="gender"
+			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"
+			javaType="com.fbh.enums.Gender"
+			jdbcType="INTEGER"
+		/>
+		<result property="locked" column="locked"/>
+		<result property="created" column="created"/>
+		<result property="updated" column="updated"/>
+		<result property="role" column="role"/>
+	</resultMap>
+	<!-- sql片段 -->
+	<sql id="userColumn">*</sql>
+	<!-- 查询用户列表+模糊查询 -->
+	<select id="getUserList" resultMap="userMap">
+		select <include refid="userColumn"/> from cms_user
+		<where>
+			<if test="null!=username and username!=''"> and username like '%${username}%'</if>
+		</where>
+	</select>
+	<!-- 用户是否禁用 -->
+	<update id="updateLocked">
+		update cms_user set locked=#{locked} where id=#{id}
+	</update>
+	<!-- 注册 -->
+	<insert id="register">
+		insert into cms_user(username,password,gender) values(#{username},#{password},#{gender.ordinal})
+	</insert>
+</mapper>

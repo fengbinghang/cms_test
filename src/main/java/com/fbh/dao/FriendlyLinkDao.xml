@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间的值为dao层接口的权限定名 -->
+<mapper namespace="com.fbh.dao.FriendlyLinkDao">
+	<select id="getLinks" resultType="FriendlyLink">
+		select * from cms_friendly_link
+	</select>
+	<insert id="insertLink">
+		insert into cms_friendly_link values(null,#{text},#{url},now())
+	</insert>
+</mapper>

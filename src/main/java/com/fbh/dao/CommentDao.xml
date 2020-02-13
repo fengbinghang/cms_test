@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间的值为dao层接口的权限定名 -->
+<mapper namespace="com.fbh.dao.CommentDao">
+	<insert id="insertComment">
+		insert into cms_comment values(null,#{u.id},#{a.id},#{content},#{created})
+	</insert>
+	<select id="getById" resultMap="commentMap">
+		select * from cms_comment c join cms_user u on c.user_id=u.id join cms_article a on c.article_id=a.id where c.article_id=#{id} order by c.created desc
+	</select>
+	<resultMap type="Comment" id="commentMap">
+		<id property="id" column="id"/>
+		<result property="content" column="content"/>
+		<result property="created" column="created"/>
+		<association property="u" javaType="User">
+			<id property="id" column="user_id"/>
+			<result property="username" column="username"/>
+		</association>
+		<association property="a" javaType="Article">
+			<id property="id" column="article_id"/>
+		</association>
+	</resultMap>
+</mapper>

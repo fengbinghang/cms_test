@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间的值为dao层接口的权限定名 -->
+<mapper namespace="com.fbh.dao.ArticleDao">
+	<resultMap type="Article" id="artMap">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="picture" column="picture"/>
+		<result property="hits" column="hits"/>
+		<result property="hot" column="hot"/>
+		<result property="status" column="status"/>
+		<result property="deleted" column="deleted"/>
+		<result property="created" column="created"/>
+		<result property="updated" column="updated"/>
+		<association property="u" javaType="User" select="com.fbh.dao.UserDao.getOne" column="id=user_id"/>
+	</resultMap>
+	<resultMap type="Article" id="artContent" extends="artMap">
+		<result property="content" column="content"/>
+	</resultMap>
+	<select id="selectsByAdmin" resultMap="artMap">
+		select * from cms_article
+		<where>
+			<if test="null!=title and title!=''"> and title like '%${title}%'</if>
+			<if test="null!=status or status==0"> and status=#{status}</if>
+			<if test="null!=hot and hot!=0"> and hot=1</if>
+			<if test="null!=ch and null!=ch.id and ch.id!=0"> and channel_id=#{ch.id}</if>
+			<if test="null!=ca and null!=ca.id and ca.id!=0"> and category_id=#{ca.id}</if>
+			<if test="null!=u and null!=u.id and u.id!=0"> and user_id=#{u.id}</if>
+		</where>
+		order by created desc
+	</select>
+	<select id="selectOne" resultMap="artContent">
+		select * from cms_article where id=#{id}
+	</select>
+	<select id="selectsChannel" resultType="Channel">
+		select * from cms_channel
+	</select>
+	<resultMap type="Category" id="cateMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	<select id="selectsCategory" resultMap="cateMap">
+		select * from cms_category where channel_id=#{id}
+	</select>
+	<update id="updateStatus">
+		update cms_article set status=#{status}	where id=#{id}
+	</update>
+	<insert id="addArticle">
+		insert into cms_article
+		<set>
+			<if test="title!=null">title=#{title},</if>
+			<if test="content!=null">content=#{content},</if>
+			<if test="picture!=null">picture=#{picture},</if>
+			<if test="ch!=null">channel_id=#{ch.id},</if>
+			<if test="ca!=null">category_id=#{ca.id},</if>
+			<if test="hits!=null">hits=0,</if>
+			<if test="hot!=null">hot=0,</if>
+			<if test="status!=null">status=0,</if>
+			<if test="deleted!=null">deleted=#{deleted},</if>
+			<if test="created==null">created=now(),</if>
+		</set>
+	</insert>
+</mapper>
