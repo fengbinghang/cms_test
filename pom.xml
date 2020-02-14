@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.fbh</groupId>
-  <artifactId>fbh_week_four</artifactId>
+  <groupId>com.fengbinghang</groupId>
+  <artifactId>fbh_cms</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <!-- 定义主要版本号 -->
@@ -266,7 +266,7 @@
 					<!-- 项目端口号 -->
 					<port>8090</port>
 					<!-- 项目的访问路径 -->
-					<path>/fbh_week_four</path>
+					<path>/fbh_cms</path>
 					<!-- get请求中文乱码 -->
 					<uriEncoding>utf-8</uriEncoding>
 					<staticContextPath>/pic</staticContextPath>
