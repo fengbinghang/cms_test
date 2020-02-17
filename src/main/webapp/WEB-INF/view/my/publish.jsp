@@ -80,6 +80,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 <body>
 	<%=htmlData%>
 	<form name="example" id="f1">
+		<input type="hidden" name="u.id" value="${id}">
 		文章标题:
 		<input type="text" name="title" class="form-control"><br/>
 		文章内容:

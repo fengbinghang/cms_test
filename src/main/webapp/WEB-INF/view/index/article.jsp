@@ -26,37 +26,62 @@
 			}
 		},"json")
 	}
+	function addSave(text,id,uid){
+		$.post("save/addSave.do",{"text":text,"url":id,"uid":uid},function(flag){
+			if(flag){
+				alert("收藏成功");
+			}else{
+				alert("收藏失败");
+			}
+		},"json")
+	}
 </script>
 </head>
 <body style="background-image: url('resource/img/13.jpg');">
-	<div class="container" style="float:left;background-color: white;width:800px;padding-top: 10px;margin-top: 20px;margin-left: 500px;">
-		<h1 style="margin: 10px 0px;"><span class="border border-warning" style="padding: 5px 10px;">${art.title}</span></h1>
-		<hr style="background-color: gray;"/>
-		${art.u.username}<br>
-		${art.content}<br/><br/>
-		<img alt="..." src="/pic/${art.picture}" style="width:768px;height:432px;">
-		<br/>
-		<p style="text-align: right;padding-right: 50px;"><fmt:formatDate value="${art.created}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
-		<hr style="background-color: gray;"/>
-		<button class="btn btn-outline-dark" onclick="location='index.do'">返回首页</button>
-		<br/>
-		<br/>
-		<c:if test="${username==null}">
-			请登录后再发布评论
-		</c:if>
-		<c:if test="${username!=null}">
-			<textarea placeholder="评论内容" name="content"></textarea>
-			<button class="btn btn-primary" onclick="fb(${art.u.id},${art.id})">发布</button>
-		</c:if>
-		<ul class="list-group">
-		  <c:forEach items="${page.list}" var="com">
-			<li class="list-group-item">
-				${com.u.username}&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${com.created}" pattern="yyyy-MM-dd HH:mm:ss"/><br/>
-				${com.content}
-			</li>
-		</c:forEach>
-		</ul>
-		<jsp:include page="/WEB-INF/view/public/page.jsp"/>
+	<div class="container" style="float:left;background-color: white;width:950px;padding-top: 10px;margin-top: 20px;margin-left: 500px;">
+		<div>
+			<h1 style="margin: 10px 0px;"><span class="border border-warning" style="padding: 5px 10px;">${art.title}</span></h1>
+			<hr style="background-color: gray;"/>
+			${art.u.username}<br>
+			${art.content}<br/><br/>
+			<img alt="..." src="/pic/${art.picture}" style="width:768px;height:432px;">
+			<br/>
+			<p style="text-align: right;padding-right: 50px;"><fmt:formatDate value="${art.created}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+			<hr style="background-color: gray;"/>
+			<button class="btn btn-outline-dark" onclick="location='index.do'">返回首页</button>
+			<c:if test="${username!=null}">
+				<button class="btn btn-outline-dark" onclick="addSave('${art.title}',${art.id},${id})">收藏文章</button>
+			</c:if>
+			<br/>
+			<br/>
+			<c:if test="${username==null}">
+				请登录后再发布评论
+			</c:if>
+			<c:if test="${username!=null}">
+				<textarea placeholder="评论内容" name="content"></textarea>
+				<button class="btn btn-primary" onclick="fb(${id},${art.id})">发布</button>
+			</c:if>
+			<ul class="list-group">
+			  <c:forEach items="${page.list}" var="com">
+				<li class="list-group-item">
+					${com.u.username}&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${com.created}" pattern="yyyy-MM-dd HH:mm:ss"/><br/>
+					${com.content}
+				</li>
+			</c:forEach>
+			</ul>
+			<jsp:include page="/WEB-INF/view/public/page.jsp"/>
+		</div>
+		<!-- 下 -->
+		<div class="row" style="margin-top: 30px;">
+			<div class="col-md-12">
+				<p class="text-center">
+					友情链接：
+					<c:forEach items="${fs.list}" var="l">
+						<a href="${l.url}" target="_blank">${l.text}</a>&nbsp;&nbsp;&nbsp;
+					</c:forEach>
+				</p>
+			</div>
+		</div>
 	</div>
 	<div class="card" style="width: 18rem;float:left;margin-top: 60px;margin-left: 60px;">
 		 <div class="card-header">

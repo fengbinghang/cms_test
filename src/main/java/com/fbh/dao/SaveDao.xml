@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间的值为dao层接口的权限定名 -->
+<mapper namespace="com.fbh.dao.SaveDao">
+	<resultMap type="Save" id="saveMap">
+		<id property="id" column="id"/>
+		<result property="text" column="text"/>
+		<result property="url" column="url"/>
+		<result property="uid" column="uid"/>
+		<result property="created" column="created"/>		
+	</resultMap>
+	<select id="getSaves" resultMap="saveMap">
+		select s.*,u.id uid from cms_save s join cms_user u on s.user_id=u.id where s.user_id=#{id} order by s.created desc
+	</select>
+	<insert id="addSave">
+		insert into cms_save values(null,#{text},#{url},#{uid},now())
+	</insert>
+	<delete id="deleteSave">
+		delete from cms_save where id=#{id}
+	</delete>
+</mapper>

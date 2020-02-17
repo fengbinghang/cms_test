@@ -55,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="picture!=null">picture=#{picture},</if>
 			<if test="ch!=null">channel_id=#{ch.id},</if>
 			<if test="ca!=null">category_id=#{ca.id},</if>
+			<if test="null!=u and u.id!=0">user_id=#{u.id},</if>
 			<if test="hits!=null">hits=0,</if>
 			<if test="hot!=null">hot=0,</if>
 			<if test="status!=null">status=0,</if>

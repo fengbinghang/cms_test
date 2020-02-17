@@ -12,12 +12,16 @@ import com.fbh.bean.Article;
 import com.fbh.bean.Comment;
 import com.fbh.service.ArticleService;
 import com.fbh.service.CommentService;
+import com.fbh.service.FriendlyLinkService;
 
 @Controller
 public class IndexController {
 
 	@Autowired
 	private CommentService cs;
+
+	@Autowired
+	private FriendlyLinkService fls;
 
 	@Autowired
 	private ArticleService service;
@@ -29,6 +33,7 @@ public class IndexController {
 		Article a = new Article();
 		a.setHot(1);
 		m.addAttribute("hots", service.selectsByAdmin(a, 1, 10));
+		m.addAttribute("fs", fls.getLinks(1));
 		return "index/article";
 	}
 

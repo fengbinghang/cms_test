@@ -33,9 +33,10 @@
 	<div class="container">
 		<!-- 头 -->		
 		<div class="row">
-			<div class="col-md-12" style="height: 130px;background-color: #3579c6;line-height: 130px;">
+			<div class="col-md-12" style="height: 130px;background-color: red;line-height: 130px;">
 				<img src="resource/img/36.jpg" style="width: 192px;height:108px;margin-top: -45px;">
 				<font style="font-size:60px;color:white;">CMS个人中心</font>
+				<button class="btn btn-outline-dark" style="margin-left: 400px;" onclick="location='index.do'">返回首页</button>
 			</div>
 		</div>
 		<!-- 下面 -->
@@ -45,7 +46,7 @@
 				<nav class="nav flex-column">
 					<a class="list-group-item active"  href="javascript:void(0)" data="article/selectsMy.do?u.id=${id}">查看文章</a>
 					<a class="list-group-item"  href="javascript:void(0)" data="article/toAdd.do">发布文章</a>
-					<a class="list-group-item"  href="javascript:void(0)" data="">资料管理</a>
+					<a class="list-group-item"  href="javascript:void(0)" data="save/getSaves.do?id=${id}">我的收藏夹</a>
 					<a class="list-group-item"  href="javascript:void(0)" data="">其它管理</a>					
 				</nav>
 			</div>
