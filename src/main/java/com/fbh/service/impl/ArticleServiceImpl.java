@@ -58,4 +58,9 @@ public class ArticleServiceImpl implements ArticleService {
 		dao.addArticle(art);
 	}
 
+	@Override
+	public List<Article> selectsImage() {
+		return dao.selectsImage();
+	}
+
 }

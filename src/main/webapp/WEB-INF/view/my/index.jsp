@@ -46,6 +46,7 @@
 				<nav class="nav flex-column">
 					<a class="list-group-item active"  href="javascript:void(0)" data="article/selectsMy.do?u.id=${id}">查看文章</a>
 					<a class="list-group-item"  href="javascript:void(0)" data="article/toAdd.do">发布文章</a>
+					<a class="list-group-item"  href="javascript:void(0)" data="article/toAddImage.do">发布图片</a>
 					<a class="list-group-item"  href="javascript:void(0)" data="save/getSaves.do?id=${id}">我的收藏夹</a>
 					<a class="list-group-item"  href="javascript:void(0)" data="">其它管理</a>					
 				</nav>

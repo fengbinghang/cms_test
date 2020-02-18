@@ -14,6 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="deleted" column="deleted"/>
 		<result property="created" column="created"/>
 		<result property="updated" column="updated"/>
+		<result property="ct" column="contentType"
+			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"
+			javaType="com.fbh.enums.ContentType" jdbcType="INTEGER"/>
 		<association property="u" javaType="User" select="com.fbh.dao.UserDao.getOne" column="id=user_id"/>
 	</resultMap>
 	<resultMap type="Article" id="artContent" extends="artMap">
@@ -61,6 +64,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="status!=null">status=0,</if>
 			<if test="deleted!=null">deleted=#{deleted},</if>
 			<if test="created==null">created=now(),</if>
+			<if test="null!=ct">contentType=#{ct.ordinal},</if>
 		</set>
 	</insert>
+	<select id="selectsImage" resultMap="artMap">
+		select * from cms_article where contentType=1 order by created desc limit 10
+	</select>
 </mapper>

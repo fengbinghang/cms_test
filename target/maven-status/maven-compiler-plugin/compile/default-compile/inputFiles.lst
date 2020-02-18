@@ -4,6 +4,7 @@ D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\service\impl\ArticleSer
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\service\CommentService.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\bean\Comment.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\controller\IndexController.java
+D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\bean\Content.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\bean\Save.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\interceptor\MyInterceptor.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\dao\ArticleDao.java
@@ -16,6 +17,7 @@ D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\service\FriendlyLinkSer
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\vo\UserVO.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\dao\CommentDao.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\exception\CMSRuntimeException.java
+D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\enums\ContentType.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\service\UserService.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\dao\SlideDao.java
 D:\java日常练习\小一\fbh_cms\src\main\java\com\fbh\service\SlideService.java

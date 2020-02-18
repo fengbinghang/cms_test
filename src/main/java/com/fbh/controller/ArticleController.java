@@ -1,6 +1,7 @@
 package com.fbh.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.fbh.bean.Article;
 import com.fbh.bean.Category;
 import com.fbh.bean.Channel;
+import com.fbh.bean.Content;
+import com.fbh.enums.ContentType;
 import com.fbh.service.ArticleService;
 import com.github.pagehelper.PageInfo;
 
@@ -85,6 +89,11 @@ public class ArticleController {
 		return "my/publish";
 	}
 
+	@RequestMapping("toAddImage.do")
+	public String toAddImage() {
+		return "my/addImage";
+	}
+
 	@ResponseBody
 	@RequestMapping("addArticle.do")
 	public Boolean addArticle(Article art, MultipartFile myFile) {
@@ -104,6 +113,7 @@ public class ArticleController {
 				myFile.transferTo(f);
 				art.setPicture(startName + endName);
 			}
+			art.setCt(ContentType.HTML);
 			service.addArticle(art);
 			return true;
 		} catch (Exception e) {
@@ -111,4 +121,57 @@ public class ArticleController {
 			return false;
 		}
 	}
+
+	@ResponseBody
+	@RequestMapping("addArticleImage.do")
+	public Boolean addArticleImage(Article art, MultipartFile titleImage, MultipartFile[] myFiles,
+			String[] myMessages) {
+		try {
+			if (titleImage.getSize() > 0) {
+				// 上传文件名
+				String realName = titleImage.getOriginalFilename();
+				// 图片存放位置
+				String path = "d:/pic/";
+				// 上传文件随机前缀
+				String startName = UUID.randomUUID().toString();
+				// 上传文件后缀
+				String endName = realName.substring(realName.lastIndexOf("."));
+				// 创建上传的文件
+				File f = new File(path + startName + endName);
+				// 在指定位置创建文件
+				titleImage.transferTo(f);
+				art.setPicture(startName + endName);
+			}
+			List<Content> cs = new ArrayList<Content>();
+			int i = 0;
+			for (MultipartFile myFile : myFiles) {
+				if (myFile.getSize() > 0) {
+					// 上传文件名
+					String realName = myFile.getOriginalFilename();
+					// 图片存放位置
+					String path = "d:/pic/";
+					// 上传文件随机前缀
+					String startName = UUID.randomUUID().toString();
+					// 上传文件后缀
+					String endName = realName.substring(realName.lastIndexOf("."));
+					// 创建上传的文件
+					File f = new File(path + startName + endName);
+					// 在指定位置创建文件
+					myFile.transferTo(f);
+					String pic = startName + endName;
+					Content c = new Content(pic, myMessages[i]);
+					cs.add(c);
+				}
+				i++;
+			}
+			art.setContent(JSON.toJSONString(cs));
+			art.setCt(ContentType.IMAGE);
+			service.addArticle(art);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }

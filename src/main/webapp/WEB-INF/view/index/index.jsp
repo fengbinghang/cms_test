@@ -104,6 +104,18 @@
 					</c:forEach>
 				  </ul>
 				</div>
+				<div class="card" style="width: 250px;margin-top: 50px;">
+				  <div class="card-header">
+				    	最新图片
+				  </div>
+				  <ul class="list-group list-group-flush">
+				  	<c:forEach items="${images}" var="c">
+						<li class="list-group-item">
+							<img src="/pic/${c.name}" style="width:100px;height:50px;" onclick="location='getOne.do?id=${c.id}'">
+						</li>
+					</c:forEach>
+				  </ul>
+				</div>
 			</div>
 		</div>
 		<!-- 下 -->

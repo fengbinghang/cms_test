@@ -2,8 +2,11 @@ package com.fbh.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fbh.enums.ContentType;
 
 /**
  * 
@@ -22,24 +25,6 @@ public class Article implements Serializable {
 
 	public Article() {
 		super();
-	}
-
-	public Article(Integer id, String title, String content, String picture, Channel ch, Category ca, User u,
-			Integer hits, Integer hot, Integer status, Integer deleted, Date created, Date updated) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.picture = picture;
-		this.ch = ch;
-		this.ca = ca;
-		this.u = u;
-		this.hits = hits;
-		this.hot = hot;
-		this.status = status;
-		this.deleted = deleted;
-		this.created = created;
-		this.updated = updated;
 	}
 
 	// 文章id
@@ -70,6 +55,24 @@ public class Article implements Serializable {
 	// 最后一次修改时间
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updated;
+	private ContentType ct;
+	private List<Content> cs;
+
+	public List<Content> getCs() {
+		return cs;
+	}
+
+	public void setCs(List<Content> cs) {
+		this.cs = cs;
+	}
+
+	public ContentType getCt() {
+		return ct;
+	}
+
+	public void setCt(ContentType ct) {
+		this.ct = ct;
+	}
 
 	public Integer getId() {
 		return id;

@@ -41,10 +41,39 @@
 	<div class="container" style="float:left;background-color: white;width:950px;padding-top: 10px;margin-top: 20px;margin-left: 500px;">
 		<div>
 			<h1 style="margin: 10px 0px;"><span class="border border-warning" style="padding: 5px 10px;">${art.title}</span></h1>
+			<img alt="..." src="/pic/${art.picture}" style="width:192px;height:108px;">
 			<hr style="background-color: gray;"/>
-			${art.u.username}<br>
-			${art.content}<br/><br/>
-			<img alt="..." src="/pic/${art.picture}" style="width:768px;height:432px;">
+			发表人：${art.u.username}<br/><br/>
+			<c:if test="${art.ct.ordinal==0}">
+				${art.content}<br/><br/>
+			</c:if>
+			<c:if test="${art.ct.ordinal==1}">
+				<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+				  <ol class="carousel-indicators">
+				    <c:forEach items="${art.cs}" var="c" varStatus="count">
+					    <li data-target="#carouselExampleCaptions" data-slide-to="${count.count-1}"  class="${count.count==1?'active':''}"></li>				    	
+				    </c:forEach>
+				  </ol>
+				  <div class="carousel-inner"> 
+					<c:forEach items="${art.cs}" var="c" varStatus="count">
+						 <div class="carousel-item ${count.count==1?'active':''}">
+					      <img src="/pic/${c.name}" class="d-block w-100" alt="...">
+					      <div class="carousel-caption d-none d-md-block">
+					        <p style="color:yellow;">${c.content}</p>
+					      </div>
+					    </div>
+					</c:forEach>
+				  </div>
+				  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+				  </a>
+				  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+				  </a>
+				</div>
+			</c:if>
 			<br/>
 			<p style="text-align: right;padding-right: 50px;"><fmt:formatDate value="${art.created}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
 			<hr style="background-color: gray;"/>

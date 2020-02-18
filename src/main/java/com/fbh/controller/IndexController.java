@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.fbh.bean.Article;
 import com.fbh.bean.Comment;
+import com.fbh.bean.Content;
 import com.fbh.service.ArticleService;
 import com.fbh.service.CommentService;
 import com.fbh.service.FriendlyLinkService;
@@ -28,12 +30,16 @@ public class IndexController {
 
 	@RequestMapping("getOne.do")
 	public String getOne(Model m, Integer id, Integer pageNum) {
-		m.addAttribute("art", service.selectOne(id));
+		Article art = service.selectOne(id);
+		m.addAttribute("art", art);
 		m.addAttribute("page", cs.getById(id, pageNum));
 		Article a = new Article();
 		a.setHot(1);
 		m.addAttribute("hots", service.selectsByAdmin(a, 1, 10));
 		m.addAttribute("fs", fls.getLinks(1));
+		if (art.getCt().getOrdinal() == 1) {
+			art.setCs(JSON.parseArray(art.getContent(), Content.class));
+		}
 		return "index/article";
 	}
 
