@@ -1,8 +1,16 @@
 package com.fbh.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FriendlyLink {
+public class FriendlyLink implements Serializable{
+
+	/**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 5387681839213970768L;
 
 	public FriendlyLink() {
 		super();

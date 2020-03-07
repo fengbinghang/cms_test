@@ -2,8 +2,10 @@ package com.fbh.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,10 @@ public class AdminController {
 	@Autowired
 	private FriendlyLinkService fls;
 
+	@SuppressWarnings("rawtypes")
+	@Autowired
+	private RedisTemplate rt;
+
 	// 存放栏目
 	private List<Channel> channelList = null;
 
@@ -58,9 +64,18 @@ public class AdminController {
 	public String index(Model m, Article a, @RequestParam(defaultValue = "1") Integer pageNum,
 			@RequestParam(defaultValue = "5") Integer pageSize) throws InterruptedException {
 		Thread chThread = new Thread() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
-				channelList = service.selectsChannel();
+				channelList = rt.opsForList().range("channelList", 0, -1);
+				if (channelList == null || channelList.size() == 0) {
+					channelList = service.selectsChannel();
+					System.err.println("从mysql查出来的");
+					rt.opsForList().leftPushAll("channelList", channelList.toArray());
+					System.err.println("存到redis中了");
+				} else {
+					System.err.println("从redis查出来的");
+				}
 			}
 		};
 		// 启动线程
@@ -70,9 +85,18 @@ public class AdminController {
 		m.addAttribute("channels", channelList);
 		if (null != a.getCh() && a.getCh().getId() != 0) {
 			Thread caThread = new Thread() {
+				@SuppressWarnings("unchecked")
 				@Override
 				public void run() {
-					caList = service.selectsCategory(a.getCh().getId());
+					caList = rt.opsForList().range("caList", 0, -1);
+					if (caList == null || caList.size() == 0) {
+						caList = service.selectsCategory(a.getCh().getId());
+						System.err.println("从mysql查出来的");
+						rt.opsForList().leftPushAll("caList", caList.toArray());
+						System.err.println("存到redis中了");
+					} else {
+						System.err.println("从redis查出来的");
+					}
 				}
 			};
 			caThread.start();
@@ -107,7 +131,7 @@ public class AdminController {
 		Thread cThread = new Thread() {
 			@Override
 			public void run() {
-				int i=0;
+				int i = 0;
 				for (Article article : list) {
 					List<Content> cs = JSON.parseArray(article.getContent(), Content.class);
 					for (Content c : cs) {
@@ -133,9 +157,20 @@ public class AdminController {
 		m.addAttribute("art", a);
 		// 最新文章线程
 		Thread newThread = new Thread() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
-				newPage = service.selectsByAdmin(new Article(), pageNum, 5);
+				List<Article> newList = rt.opsForList().range("newList", 0, -1);
+				if (newList == null || newList.size() == 0) {
+					newPage = service.selectsByAdmin(new Article(), pageNum, 5);
+					System.err.println("从mysql查出来的");
+					rt.opsForList().leftPushAll("newList", newPage.getList().toArray());
+					System.err.println("存到redis中了");
+					rt.expire("newList", 5, TimeUnit.MINUTES);
+				} else {
+					newPage.setList(newList);
+					System.err.println("从redis查出来的");
+				}
 			}
 		};
 		newThread.start();
