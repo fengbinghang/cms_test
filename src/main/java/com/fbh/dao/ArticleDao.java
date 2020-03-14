@@ -2,6 +2,8 @@ package com.fbh.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.fbh.bean.Article;
 import com.fbh.bean.Category;
 import com.fbh.bean.Channel;
@@ -21,13 +23,15 @@ public interface ArticleDao {
 	public Article selectOne(Integer id);
 
 	public List<Channel> selectsChannel();
-	
+
 	public List<Category> selectsCategory(Integer id);
 
 	public void updateStatus(Article a);
 
+	public void updateHits(@Param("id")Integer id,@Param("hits") Integer hits);
+
 	public void addArticle(Article art);
-	
+
 	public List<Article> selectsImage();
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,9 @@ import com.github.pagehelper.PageInfo;
 @RequestMapping("article")
 @Controller
 public class ArticleController {
+
+	@Autowired
+	private KafkaTemplate<String, String> kt;
 
 	@Autowired
 	private ArticleService service;
@@ -77,6 +81,7 @@ public class ArticleController {
 	public Boolean updateStatus(Article a) {
 		try {
 			service.updateStatus(a);
+			kt.send("articles", "updateEs|"+JSON.toJSONString(a));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,5 +178,5 @@ public class ArticleController {
 			return false;
 		}
 	}
-	
+
 }

@@ -25,7 +25,9 @@ public interface ArticleService {
 
 	public void updateStatus(Article a);
 
+	public void updateHits(Integer id, Integer hits);
+
 	public void addArticle(Article art);
-	
+
 	public List<Article> selectsImage();
 }

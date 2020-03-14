@@ -59,9 +59,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="ch!=null">channel_id=#{ch.id},</if>
 			<if test="ca!=null">category_id=#{ca.id},</if>
 			<if test="null!=u and u.id!=0">user_id=#{u.id},</if>
-			<if test="hits!=null">hits=0,</if>
-			<if test="hot!=null">hot=0,</if>
-			<if test="status!=null">status=0,</if>
+			<if test="hits==null">hits=0,</if>
+			<if test="hot==null">hot=0,</if>
+			<if test="status==null">status=0,</if>
 			<if test="deleted!=null">deleted=#{deleted},</if>
 			<if test="created==null">created=now(),</if>
 			<if test="null!=ct">contentType=#{ct.ordinal},</if>
@@ -70,4 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectsImage" resultMap="artMap">
 		select * from cms_article where contentType=1 order by created desc limit 10
 	</select>
+	<update id="updateHits">
+		update cms_article set hits=#{hits} where id=#{id}
+	</update>
 </mapper>

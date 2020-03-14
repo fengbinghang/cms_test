@@ -2,6 +2,7 @@ D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\bean\Slide.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\dao\FriendlyLinkDao.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\interceptor\TimeInterceptor.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\service\SaveService.java
+D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\dao\ArticleRepository.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\enums\Gender.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\dao\UserDao.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\dao\SaveDao.java
@@ -37,5 +38,6 @@ D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\service\impl\SlideSe
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\dao\CommentDao.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\service\impl\CommentServiceImpl.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\service\impl\ArticleServiceImpl.java
+D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\util\HLUtils.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\controller\SaveController.java
 D:\java日常练习\小实训\fbh_cms\src\main\java\com\fbh\bean\Article.java

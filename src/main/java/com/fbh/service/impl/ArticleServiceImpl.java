@@ -63,4 +63,9 @@ public class ArticleServiceImpl implements ArticleService {
 		return dao.selectsImage();
 	}
 
+	@Override
+	public void updateHits(Integer id, Integer hits) {
+		dao.updateHits(id, hits);
+	}
+
 }

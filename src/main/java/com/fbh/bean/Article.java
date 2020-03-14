@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fbh.enums.ContentType;
@@ -15,6 +19,7 @@ import com.fbh.enums.ContentType;
  * @author:冯炳航
  * @date: 2020年1月7日 下午1:07:22
  */
+@Document(indexName = "text_cms", type = "Article")
 public class Article implements Serializable {
 	/**
 	 * @fieldName: serialVersionUID
@@ -28,10 +33,13 @@ public class Article implements Serializable {
 	}
 
 	// 文章id
+	@Id
 	private Integer id;
 	// 标题
+	@Field(index = true, store = true, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word", type = FieldType.text)
 	private String title;
 	// 文章内容
+	@Field(index = true, store = true, analyzer = "ik_max_word", searchAnalyzer = "ik_max_word", type = FieldType.text)
 	private String content;
 	// 文章标题图片
 	private String picture;
@@ -41,6 +49,8 @@ public class Article implements Serializable {
 	private Category ca;
 	// 发布人
 	private User u;
+	private String username;
+
 	// 点击量
 	private Integer hits;
 	// 是否上热门 0=不上 1=上
@@ -57,6 +67,14 @@ public class Article implements Serializable {
 	private Date updated;
 	private ContentType ct;
 	private List<Content> cs;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public List<Content> getCs() {
 		return cs;
